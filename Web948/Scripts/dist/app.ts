@@ -23,7 +23,7 @@ export class App {
         const homeBlock = $(".mobile .home");
         const menuBlock = $(".mobile .menu");
 
-        const btns = $(".mobile a");
+        const btns = $(".mobile .home a");
         console.log(btns);
         btns.click(() => {
             homeBlock.css({
