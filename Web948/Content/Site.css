@@ -112,8 +112,8 @@
 
 /*Slid Show*/
 .slidewapper {
-    height: 75%;
-    margin-top: 25%;
+    height: 90%;
+    margin-top: 15%;
 }
 
     .slidewapper ul {
@@ -126,7 +126,7 @@
 li.slideItem {
     width: 100%;
     height: 200px;
-    background-size:100% 200px;
+    background-size: 100% 200px;
 }
 
 .slideItem .btn {
@@ -150,4 +150,9 @@ li.slideItem {
     position: relative;
     float: right;
     right: 0;
+}
+
+.item-name, .item-price {
+    font-weight: 900;
+    display: inline-block;
 }

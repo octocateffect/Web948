@@ -1,12 +1,7 @@
-var Item = (function () {
-    function Item() {
+var MenuItem = (function () {
+    function MenuItem() {
     }
-    return Item;
-}());
-var Menu = (function () {
-    function Menu() {
-    }
-    return Menu;
+    return MenuItem;
 }());
 var Condition = (function () {
     function Condition() {
@@ -66,7 +61,7 @@ var App = (function () {
             homeBlock.css({
                 "display": "none"
             });
-            var height = (_this.height * 0.86 - (54 * 2));
+            var height = (_this.height * 0.92 - (54 * 2));
             $(".menu .menu-area").css({
                 "height": "" + height
             });
@@ -85,18 +80,19 @@ var App = (function () {
             detailBlock.hide();
         });
     };
-    App.prototype.generateSlideContentItem = function (menu) {
-        var html = "<li class=\"slideItem\" style=\"background-image: url('../../Content/images/food1.png');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                                <a href=\"#\" class=\"btn btn-large left orange\">\n                                    <i class=\"material-icons\">remove</i>\n                                </a>\n                            </span>\n                            <span class=\"slideImgMask \">\n                                100 \u5143\n                            </span>\n                            <span class=\"slidRightBtn\">\n                                <a href=\"#\" class=\"btn btn-large right orange\">\n                                    <i class=\"material-icons\">add</i>\n                                </a>\n                            </span>\n                        </div>\n                    </li>";
+    App.prototype.generateSlideContentItem = function (item) {
+        var image = item.imageurl || "../../Content/images/food1.png";
+        var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large left orange\">\n                                    <i class=\"material-icons\">remove</i>\n                                </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n                            <span class=\"slidRightBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large right orange\">\n                                    <i class=\"material-icons\">add</i>\n                                </a>\n                            </span>\n                        </div>\n                    </li>";
         return html;
     };
     App.prototype.generateSlideContent = function () {
         var _this = this;
         var menus = this.menus;
-        var html = " <ul><li class=\"slideItem\" style=\"height: 100px\"></li>";
+        var html = " <ul><li class=\"slideItem\" style=\"height: 50px\"></li>";
         menus.map(function (menu) {
             html += _this.generateSlideContentItem(menu);
         });
-        html += "<li class=\"slideItem\" style=\"height: 100px\"></li></ul>";
+        html += "<li class=\"slideItem\" style=\"height: 50px\"></li></ul>";
         return html;
     };
     App.prototype.insertslideContent = function () {

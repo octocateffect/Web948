@@ -1,10 +1,4 @@
-﻿class Item {
-    name: string;
-    price: string;
-    img: string;
-}
-
-class Menu {
+﻿class MenuItem {
     id: string;
     category: string;
     name: string;
@@ -21,7 +15,7 @@ class Condition {
 class App {
     private height: number;
 
-    private menus: Menu[] = [];
+    private menus: MenuItem[] = [];
 
     private getMenus(callback: any): void {
         const url = "/Content/menus.json";
@@ -36,14 +30,14 @@ class App {
             beforeSend: () => {
             },
             success: response => {
-                var data: Menu[] = [];
+                var data: MenuItem[] = [];
 
                 let i = 0;
                 while (response[0][i]) {
                     console.log(response[0][i]);
                     const item = response[0][i];
 
-                    data.push(<Menu>{
+                    data.push(<MenuItem>{
                         id: item["id"],
                         name: item["name"],
                         category: item["category"],
@@ -88,7 +82,7 @@ class App {
                 "display": "none"
             });
 
-            const height = (this.height * 0.86 - (54 * 2));
+            const height = (this.height * 0.92 - (54 * 2));
             $(".menu .menu-area").css({
                 "height": `${height}`
             });
@@ -115,19 +109,22 @@ class App {
         });
     }
 
-    private generateSlideContentItem(menu: Menu): string {
-        const html = `<li class="slideItem" style="background-image: url('../../Content/images/food1.png');">
+    private generateSlideContentItem(item: MenuItem): string {
+        const image =item.imageurl || `../../Content/images/food1.png`; //TODO
+
+        const html = `<li class="slideItem" style="background-image: url('${image}');">
                         <div class="row center">
                             <span class="slidLeftBtn">
-                                <a href="#" class="btn btn-large left orange">
+                                <a href="#" value="${item.id}" class="btn btn-large left orange">
                                     <i class="material-icons">remove</i>
                                 </a>
                             </span>
-                            <span class="slideImgMask ">
-                                100 元
+                            <span class="slideImgMask center">
+<div class="item-name">${item.name.trim()}</div>
+<div class="item-price">${item.prices} 元</div>
                             </span>
                             <span class="slidRightBtn">
-                                <a href="#" class="btn btn-large right orange">
+                                <a href="#" value="${item.id}" class="btn btn-large right orange">
                                     <i class="material-icons">add</i>
                                 </a>
                             </span>
@@ -138,17 +135,17 @@ class App {
     }
 
     private generateSlideContent(): string {
-        const menus: Menu[] = this.menus;
+        const menus: MenuItem[] = this.menus;
 
         //console.log(menus);
 
-        let html = ` <ul><li class="slideItem" style="height: 100px"></li>`;
+        let html = ` <ul><li class="slideItem" style="height: 50px"></li>`;
 
-        menus.map((menu: Menu) => {
+        menus.map((menu: MenuItem) => {
             html += this.generateSlideContentItem(menu);
         });
 
-        html += `<li class="slideItem" style="height: 100px"></li></ul>`;
+        html += `<li class="slideItem" style="height: 50px"></li></ul>`;
 
         return html;
     }
