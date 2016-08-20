@@ -123,11 +123,8 @@ var App = (function () {
             }
         ];
     }
-    App.prototype.init = function () {
+    App.prototype.initBtnEvent = function () {
         var _this = this;
-        console.log("init");
-        this.height = $(".mobile").height();
-        console.log(this.height);
         var homeBlock = $(".mobile .home");
         var menuBlock = $(".mobile .menu");
         var detailBlock = $(".mobile .detail");
@@ -156,6 +153,12 @@ var App = (function () {
         closeDetailBtn.click(function () {
             detailBlock.hide();
         });
+    };
+    App.prototype.init = function () {
+        console.log("init");
+        this.height = $(".mobile").height();
+        console.log(this.height);
+        this.initBtnEvent();
     };
     return App;
 }());

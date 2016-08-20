@@ -125,13 +125,7 @@ class App {
         }
     ];
 
-    init() {
-        console.log("init");
-
-        // get height
-        this.height = $(".mobile").height();
-        console.log(this.height);
-
+    private initBtnEvent(): void {
         // init Block
         const homeBlock = $(".mobile .home");
         const menuBlock = $(".mobile .menu");
@@ -170,6 +164,15 @@ class App {
         closeDetailBtn.click(() => {
             detailBlock.hide();
         });
+    }
+
+    init() {
+        console.log("init");
+
+        // get height
+        this.height = $(".mobile").height();
+        console.log(this.height);
+        this.initBtnEvent();
 
         ///
         //const homeBtn = $(".mobile a[value=Home]");
