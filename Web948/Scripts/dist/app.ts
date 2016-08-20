@@ -9,6 +9,11 @@ class Company {
     goods: Good[];
 }
 
+class Condition {
+    menu: string;
+    items: string[];
+}
+
 class App {
     private vm: Company[] = [];
 
@@ -17,9 +22,11 @@ class App {
     init() {
         console.log("init");
 
+        // get height
         this.height = $(".mobile").height();
         console.log(this.height);
 
+        // init Block
         const homeBlock = $(".mobile .home");
         const menuBlock = $(".mobile .menu");
         const detailBlock = $(".mobile .detail");
@@ -48,29 +55,28 @@ class App {
 
         //ShowDetail
         const showDetailBtn = $(".mobile a[value=ShowDetail]");
-
         showDetailBtn.click(() => {
             $(".mobile .detail").show();
         });
 
+        // Hide Detail
         const closeDetailBtn = $(".mobile a[value=CloseDetail]");
-
         closeDetailBtn.click(() => {
             detailBlock.hide();
         });
 
         ///
-        const homeBtn = $(".mobile a[value=Home]");
+        //const homeBtn = $(".mobile a[value=Home]");
 
-        const menuBtn = $(".mobile a[value=Menu]");
+        //const menuBtn = $(".mobile a[value=Menu]");
 
-        const detailBtn = $(".mobile a[value=Detail]");
+        //const detailBtn = $(".mobile a[value=Detail]");
 
-        console.log(homeBtn);
+        //console.log(homeBtn);
 
-        console.log(menuBtn);
+        //console.log(menuBtn);
 
-        console.log(detailBtn);
+        //console.log(detailBtn);
     }
 }
 

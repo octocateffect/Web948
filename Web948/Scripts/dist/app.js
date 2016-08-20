@@ -8,6 +8,11 @@ var Company = (function () {
     }
     return Company;
 }());
+var Condition = (function () {
+    function Condition() {
+    }
+    return Condition;
+}());
 var App = (function () {
     function App() {
         this.vm = [];
@@ -45,12 +50,6 @@ var App = (function () {
         closeDetailBtn.click(function () {
             detailBlock.hide();
         });
-        var homeBtn = $(".mobile a[value=Home]");
-        var menuBtn = $(".mobile a[value=Menu]");
-        var detailBtn = $(".mobile a[value=Detail]");
-        console.log(homeBtn);
-        console.log(menuBtn);
-        console.log(detailBtn);
     };
     return App;
 }());
