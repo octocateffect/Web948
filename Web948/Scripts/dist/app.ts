@@ -4,9 +4,13 @@
     img: string;
 }
 
-class Company {
+class Menu {
+    id: string;
+    category: string;
     name: string;
-    menu: Item[];
+    prices: string;
+    imageurl: string;
+    items: string[];
 }
 
 class Condition {
@@ -17,118 +21,57 @@ class Condition {
 class App {
     private height: number;
 
-    private vm: Company[] = [
-        <Company>{
-            name: "Company 1",
-            menu: [
-                <Item>{
-                    id: "1",
-                    name: "Item 1 1",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "2",
-                    name: "Item 1 2",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "3",
-                    name: "Item 1 3",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "4",
-                    name: "Item 1 4",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "5",
-                    name: "Item 1 5",
-                    price: "10",
-                    img: "#"
+    private menus: Menu[] = [];
+
+    private getMenus(callback: any): void {
+        const url = "/Content/menus.json";
+        //console.log("ajax start");
+
+        $.ajax({
+            type: "get",
+            url: url,
+            data: null,
+            contentType: "json",
+            dataType: "json",
+            beforeSend: () => {
+            },
+            success: response => {
+                var data: Menu[] = [];
+
+                let i = 0;
+                while (response[0][i]) {
+                    console.log(response[0][i]);
+                    const item = response[0][i];
+
+                    data.push(<Menu>{
+                        id: item["id"],
+                        name: item["name"],
+                        category: item["category"],
+                        imageurl: item["image_url"],
+                        prices: item["prices"],
+                        items: item["items"]
+                    });
+
+                    i++;
                 }
-            ]
-        },
-        <Company>{
-            name: "Company 2",
-            menu: [
-                <Item>{
-                    id: "1",
-                    name: "Item 2 1",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "2",
-                    name: "Item 21 2",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "3",
-                    name: "Item 1 3",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "4",
-                    name: "Item 2 4",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "5",
-                    name: "Item 2 5",
-                    price: "10",
-                    img: "#"
-                }
-            ]
-        },
-        <Company>{
-            name: "Company 3",
-            menu: [
-                <Item>{
-                    id: "1",
-                    name: "Item 3 1",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "2",
-                    name: "Item 3 2",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "3",
-                    name: "Item 3 3",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "4",
-                    name: "Item 3 4",
-                    price: "10",
-                    img: "#"
-                },
-                <Item>{
-                    id: "5",
-                    name: "Item 3 5",
-                    price: "10",
-                    img: "#"
-                }
-            ]
-        }
-    ];
+                this.menus = data;
+
+                callback();
+            },
+            complete: () => {
+            },
+            error: (xhr, status, text) => {
+                //console.log(text);
+            }
+        });
+
+        //return data;
+    }
 
     private initHeight() {
         // init height
         this.height = $(".mobile").height();
-        console.log(this.height);
+        //console.log(this.height);
     }
 
     private initBtnEvent(): void {
@@ -139,7 +82,7 @@ class App {
 
         // Show Menu
         const homeBtns = $(".mobile .home a");
-        console.log(homeBtns);
+        //console.log(homeBtns);
         homeBtns.click(() => {
             homeBlock.css({
                 "display": "none"
@@ -154,7 +97,7 @@ class App {
 
         // Change Company
         const companyBtns = $(".mobile .showCompanyMenuBtnArea a");
-        console.log(companyBtns);
+        //console.log(companyBtns);
         companyBtns.click(() => {
             detailBlock.hide();
         });
@@ -170,24 +113,58 @@ class App {
         closeDetailBtn.click(() => {
             detailBlock.hide();
         });
+    }
 
-        // img
+    private generateSlideContentItem(menu: Menu): string {
+        const html = `<li class="slideItem" style="background-image: url('../../Content/images/food1.png');">
+                        <div class="row center">
+                            <span class="slidLeftBtn">
+                                <a href="#" class="btn btn-large left orange">
+                                    <i class="material-icons">remove</i>
+                                </a>
+                            </span>
+                            <span class="slideImgMask ">
+                                100 元
+                            </span>
+                            <span class="slidRightBtn">
+                                <a href="#" class="btn btn-large right orange">
+                                    <i class="material-icons">add</i>
+                                </a>
+                            </span>
+                        </div>
+                    </li>`;
 
-        //const imgs = $('.slidewapper img').offset();
-        //$(imgs)
-        //    .map((index, img) => {
-        //        var pos = $(img).offset();
-        //        const x = pos.left;
-        //        const y = pos.top;
-        //        console.log(`${x} ${y}`);
-        //    });
+        return html;
+    }
+
+    private generateSlideContent(): string {
+        const menus: Menu[] = this.menus;
+
+        //console.log(menus);
+
+        let html = ` <ul><li class="slideItem" style="height: 100px"></li>`;
+
+        menus.map((menu: Menu) => {
+            html += this.generateSlideContentItem(menu);
+        });
+
+        html += `<li class="slideItem" style="height: 100px"></li></ul>`;
+
+        return html;
+    }
+
+    private insertslideContent(): void {
+        $(".slidewapper").html(this.generateSlideContent());
     }
 
     init() {
-        console.log("init");
+        //console.log("init");
 
         this.initHeight();
         this.initBtnEvent();
+        this.getMenus(() => {
+            this.insertslideContent();
+        });
     }
 }
 

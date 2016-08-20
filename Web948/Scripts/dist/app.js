@@ -3,10 +3,10 @@ var Item = (function () {
     }
     return Item;
 }());
-var Company = (function () {
-    function Company() {
+var Menu = (function () {
+    function Menu() {
     }
-    return Company;
+    return Menu;
 }());
 var Condition = (function () {
     function Condition() {
@@ -15,117 +15,46 @@ var Condition = (function () {
 }());
 var App = (function () {
     function App() {
-        this.vm = [
-            {
-                name: "Company 1",
-                menu: [
-                    {
-                        id: "1",
-                        name: "Item 1 1",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "2",
-                        name: "Item 1 2",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "3",
-                        name: "Item 1 3",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "4",
-                        name: "Item 1 4",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "5",
-                        name: "Item 1 5",
-                        price: "10",
-                        img: "#"
-                    }
-                ]
-            },
-            {
-                name: "Company 2",
-                menu: [
-                    {
-                        id: "1",
-                        name: "Item 2 1",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "2",
-                        name: "Item 21 2",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "3",
-                        name: "Item 1 3",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "4",
-                        name: "Item 2 4",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "5",
-                        name: "Item 2 5",
-                        price: "10",
-                        img: "#"
-                    }
-                ]
-            },
-            {
-                name: "Company 3",
-                menu: [
-                    {
-                        id: "1",
-                        name: "Item 3 1",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "2",
-                        name: "Item 3 2",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "3",
-                        name: "Item 3 3",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "4",
-                        name: "Item 3 4",
-                        price: "10",
-                        img: "#"
-                    },
-                    {
-                        id: "5",
-                        name: "Item 3 5",
-                        price: "10",
-                        img: "#"
-                    }
-                ]
-            }
-        ];
+        this.menus = [];
     }
+    App.prototype.getMenus = function (callback) {
+        var _this = this;
+        var url = "/Content/menus.json";
+        $.ajax({
+            type: "get",
+            url: url,
+            data: null,
+            contentType: "json",
+            dataType: "json",
+            beforeSend: function () {
+            },
+            success: function (response) {
+                var data = [];
+                var i = 0;
+                while (response[0][i]) {
+                    console.log(response[0][i]);
+                    var item = response[0][i];
+                    data.push({
+                        id: item["id"],
+                        name: item["name"],
+                        category: item["category"],
+                        imageurl: item["image_url"],
+                        prices: item["prices"],
+                        items: item["items"]
+                    });
+                    i++;
+                }
+                _this.menus = data;
+                callback();
+            },
+            complete: function () {
+            },
+            error: function (xhr, status, text) {
+            }
+        });
+    };
     App.prototype.initHeight = function () {
         this.height = $(".mobile").height();
-        console.log(this.height);
     };
     App.prototype.initBtnEvent = function () {
         var _this = this;
@@ -133,7 +62,6 @@ var App = (function () {
         var menuBlock = $(".mobile .menu");
         var detailBlock = $(".mobile .detail");
         var homeBtns = $(".mobile .home a");
-        console.log(homeBtns);
         homeBtns.click(function () {
             homeBlock.css({
                 "display": "none"
@@ -145,7 +73,6 @@ var App = (function () {
             menuBlock.show();
         });
         var companyBtns = $(".mobile .showCompanyMenuBtnArea a");
-        console.log(companyBtns);
         companyBtns.click(function () {
             detailBlock.hide();
         });
@@ -158,10 +85,30 @@ var App = (function () {
             detailBlock.hide();
         });
     };
+    App.prototype.generateSlideContentItem = function (menu) {
+        var html = "<li class=\"slideItem\" style=\"background-image: url('../../Content/images/food1.png');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                                <a href=\"#\" class=\"btn btn-large left orange\">\n                                    <i class=\"material-icons\">remove</i>\n                                </a>\n                            </span>\n                            <span class=\"slideImgMask \">\n                                100 \u5143\n                            </span>\n                            <span class=\"slidRightBtn\">\n                                <a href=\"#\" class=\"btn btn-large right orange\">\n                                    <i class=\"material-icons\">add</i>\n                                </a>\n                            </span>\n                        </div>\n                    </li>";
+        return html;
+    };
+    App.prototype.generateSlideContent = function () {
+        var _this = this;
+        var menus = this.menus;
+        var html = " <ul><li class=\"slideItem\" style=\"height: 100px\"></li>";
+        menus.map(function (menu) {
+            html += _this.generateSlideContentItem(menu);
+        });
+        html += "<li class=\"slideItem\" style=\"height: 100px\"></li></ul>";
+        return html;
+    };
+    App.prototype.insertslideContent = function () {
+        $(".slidewapper").html(this.generateSlideContent());
+    };
     App.prototype.init = function () {
-        console.log("init");
+        var _this = this;
         this.initHeight();
         this.initBtnEvent();
+        this.getMenus(function () {
+            _this.insertslideContent();
+        });
     };
     return App;
 }());
