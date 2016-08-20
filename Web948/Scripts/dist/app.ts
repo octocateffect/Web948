@@ -145,7 +145,7 @@ class App {
                 "display": "none"
             });
 
-            const height = (this.height * 0.86 - (54 * 2)) ;
+            const height = (this.height * 0.86 - (54 * 2));
             $(".menu .menu-area").css({
                 "height": `${height}`
             });
@@ -170,6 +170,17 @@ class App {
         closeDetailBtn.click(() => {
             detailBlock.hide();
         });
+
+        // img
+
+        //const imgs = $('.slidewapper img').offset();
+        //$(imgs)
+        //    .map((index, img) => {
+        //        var pos = $(img).offset();
+        //        const x = pos.left;
+        //        const y = pos.top;
+        //        console.log(`${x} ${y}`);
+        //    });
     }
 
     init() {
