@@ -1,15 +1,15 @@
-﻿export class Good {
+﻿class Good {
     name: string;
     price: string;
     url: string;
 }
 
-export class Company {
+class Company {
     name: string;
     goods: Good[];
 }
 
-export class App {
+class App {
     private vm: Company[] = [];
 
     private height: number;

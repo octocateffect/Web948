@@ -1,16 +1,13 @@
-"use strict";
 var Good = (function () {
     function Good() {
     }
     return Good;
 }());
-exports.Good = Good;
 var Company = (function () {
     function Company() {
     }
     return Company;
 }());
-exports.Company = Company;
 var App = (function () {
     function App() {
         this.vm = [];
@@ -44,6 +41,6 @@ var App = (function () {
     };
     return App;
 }());
-exports.App = App;
 var app = new App();
 app.init();
+//# sourceMappingURL=app.js.map
