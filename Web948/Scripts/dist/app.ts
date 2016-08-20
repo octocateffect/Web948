@@ -1,12 +1,12 @@
-﻿class Good {
+﻿class Item {
     name: string;
     price: string;
-    url: string;
+    img: string;
 }
 
 class Company {
     name: string;
-    goods: Good[];
+    menu: Item[];
 }
 
 class Condition {
@@ -15,9 +15,115 @@ class Condition {
 }
 
 class App {
-    private vm: Company[] = [];
-
     private height: number;
+
+    private vm: Company[] = [
+        <Company>{
+            name: "Company 1",
+            menu: [
+                <Item>{
+                    id: "1",
+                    name: "Item 1 1",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "2",
+                    name: "Item 1 2",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "3",
+                    name: "Item 1 3",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "4",
+                    name: "Item 1 4",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "5",
+                    name: "Item 1 5",
+                    price: "10",
+                    img: "#"
+                }
+            ]
+        },
+        <Company>{
+            name: "Company 2",
+            menu: [
+                <Item>{
+                    id: "1",
+                    name: "Item 2 1",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "2",
+                    name: "Item 21 2",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "3",
+                    name: "Item 1 3",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "4",
+                    name: "Item 2 4",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "5",
+                    name: "Item 2 5",
+                    price: "10",
+                    img: "#"
+                }
+            ]
+        },
+        <Company>{
+            name: "Company 3",
+            menu: [
+                <Item>{
+                    id: "1",
+                    name: "Item 3 1",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "2",
+                    name: "Item 3 2",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "3",
+                    name: "Item 3 3",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "4",
+                    name: "Item 3 4",
+                    price: "10",
+                    img: "#"
+                },
+                <Item>{
+                    id: "5",
+                    name: "Item 3 5",
+                    price: "10",
+                    img: "#"
+                }
+            ]
+        }
+    ];
 
     init() {
         console.log("init");

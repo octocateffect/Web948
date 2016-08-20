@@ -1,7 +1,7 @@
-var Good = (function () {
-    function Good() {
+var Item = (function () {
+    function Item() {
     }
-    return Good;
+    return Item;
 }());
 var Company = (function () {
     function Company() {
@@ -15,7 +15,113 @@ var Condition = (function () {
 }());
 var App = (function () {
     function App() {
-        this.vm = [];
+        this.vm = [
+            {
+                name: "Company 1",
+                menu: [
+                    {
+                        id: "1",
+                        name: "Item 1 1",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "2",
+                        name: "Item 1 2",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "3",
+                        name: "Item 1 3",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "4",
+                        name: "Item 1 4",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "5",
+                        name: "Item 1 5",
+                        price: "10",
+                        img: "#"
+                    }
+                ]
+            },
+            {
+                name: "Company 2",
+                menu: [
+                    {
+                        id: "1",
+                        name: "Item 2 1",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "2",
+                        name: "Item 21 2",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "3",
+                        name: "Item 1 3",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "4",
+                        name: "Item 2 4",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "5",
+                        name: "Item 2 5",
+                        price: "10",
+                        img: "#"
+                    }
+                ]
+            },
+            {
+                name: "Company 3",
+                menu: [
+                    {
+                        id: "1",
+                        name: "Item 3 1",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "2",
+                        name: "Item 3 2",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "3",
+                        name: "Item 3 3",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "4",
+                        name: "Item 3 4",
+                        price: "10",
+                        img: "#"
+                    },
+                    {
+                        id: "5",
+                        name: "Item 3 5",
+                        price: "10",
+                        img: "#"
+                    }
+                ]
+            }
+        ];
     }
     App.prototype.init = function () {
         var _this = this;
