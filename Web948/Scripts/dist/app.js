@@ -19,9 +19,10 @@ var App = (function () {
         console.log(this.height);
         var homeBlock = $(".mobile .home");
         var menuBlock = $(".mobile .menu");
-        var btns = $(".mobile .home a");
-        console.log(btns);
-        btns.click(function () {
+        var detailBlock = $(".mobile .detail");
+        var homeBtns = $(".mobile .home a");
+        console.log(homeBtns);
+        homeBtns.click(function () {
             homeBlock.css({
                 "display": "none"
             });
@@ -31,10 +32,22 @@ var App = (function () {
             });
             menuBlock.show();
         });
+        var companyBtns = $(".mobile .showCompanyMenuBtnArea a");
+        console.log(companyBtns);
+        companyBtns.click(function () {
+            detailBlock.hide();
+        });
+        var showDetailBtn = $(".mobile a[value=ShowDetail]");
+        showDetailBtn.click(function () {
+            $(".mobile .detail").show();
+        });
+        var closeDetailBtn = $(".mobile a[value=CloseDetail]");
+        closeDetailBtn.click(function () {
+            detailBlock.hide();
+        });
         var homeBtn = $(".mobile a[value=Home]");
         var menuBtn = $(".mobile a[value=Menu]");
         var detailBtn = $(".mobile a[value=Detail]");
-        var detailBlock = $(".mobile .detail");
         console.log(homeBtn);
         console.log(menuBtn);
         console.log(detailBtn);
@@ -43,4 +56,3 @@ var App = (function () {
 }());
 var app = new App();
 app.init();
-//# sourceMappingURL=app.js.map

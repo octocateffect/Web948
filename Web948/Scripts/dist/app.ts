@@ -22,10 +22,12 @@ class App {
 
         const homeBlock = $(".mobile .home");
         const menuBlock = $(".mobile .menu");
+        const detailBlock = $(".mobile .detail");
 
-        const btns = $(".mobile .home a");
-        console.log(btns);
-        btns.click(() => {
+        // Show Menu
+        const homeBtns = $(".mobile .home a");
+        console.log(homeBtns);
+        homeBtns.click(() => {
             homeBlock.css({
                 "display": "none"
             });
@@ -37,13 +39,32 @@ class App {
             menuBlock.show();
         });
 
+        // Change Company
+        const companyBtns = $(".mobile .showCompanyMenuBtnArea a");
+        console.log(companyBtns);
+        companyBtns.click(() => {
+            detailBlock.hide();
+        });
+
+        //ShowDetail
+        const showDetailBtn = $(".mobile a[value=ShowDetail]");
+
+        showDetailBtn.click(() => {
+            $(".mobile .detail").show();
+        });
+
+        const closeDetailBtn = $(".mobile a[value=CloseDetail]");
+
+        closeDetailBtn.click(() => {
+            detailBlock.hide();
+        });
+
+        ///
         const homeBtn = $(".mobile a[value=Home]");
 
         const menuBtn = $(".mobile a[value=Menu]");
 
         const detailBtn = $(".mobile a[value=Detail]");
-
-        const detailBlock = $(".mobile .detail");
 
         console.log(homeBtn);
 
