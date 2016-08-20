@@ -18,14 +18,13 @@ class App {
     private menus: MenuItem[] = [];
 
     private getMenus(callback: any): void {
-        const url = "/Content/menus.json";
+        const url = "Content/menus.json";
         //console.log("ajax start");
 
         $.ajax({
             type: "get",
             url: url,
-            data: null,
-            contentType: "json",
+            //data: "",
             dataType: "json",
             beforeSend: () => {
             },

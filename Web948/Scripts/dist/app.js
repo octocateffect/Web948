@@ -14,13 +14,10 @@ var App = (function () {
     }
     App.prototype.getMenus = function (callback) {
         var _this = this;
-        var url = "/Content/menus.json";
-        //console.log("ajax start");
+        var url = "Content/menus.json";
         $.ajax({
             type: "get",
             url: url,
-            data: null,
-            contentType: "json",
             dataType: "json",
             beforeSend: function () {
             },
@@ -45,25 +42,18 @@ var App = (function () {
             complete: function () {
             },
             error: function (xhr, status, text) {
-                //console.log(text);
             }
         });
-        //return data;
     };
     App.prototype.initHeight = function () {
-        // init height
         this.height = $(".mobile").height();
-        //console.log(this.height);
     };
     App.prototype.initBtnEvent = function () {
         var _this = this;
-        // init Block
         var homeBlock = $(".mobile .home");
         var menuBlock = $(".mobile .menu");
         var detailBlock = $(".mobile .detail");
-        // Show Menu
         var homeBtns = $(".mobile .home a");
-        //console.log(homeBtns);
         homeBtns.click(function () {
             homeBlock.css({
                 "display": "none"
@@ -74,32 +64,27 @@ var App = (function () {
             });
             menuBlock.show();
         });
-        // Change Company
         var companyBtns = $(".mobile .showCompanyMenuBtnArea a");
-        //console.log(companyBtns);
         companyBtns.click(function () {
             detailBlock.hide();
         });
-        //ShowDetail
         var showDetailBtn = $(".mobile a[value=ShowDetail]");
         showDetailBtn.click(function () {
             $(".mobile .detail").show();
         });
-        // Hide Detail
         var closeDetailBtn = $(".mobile a[value=CloseDetail]");
         closeDetailBtn.click(function () {
             detailBlock.hide();
         });
     };
     App.prototype.generateSlideContentItem = function (item) {
-        var image = item.imageurl || "../../Content/images/food1.png"; //TODO
+        var image = item.imageurl || "../../Content/images/food1.png";
         var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large left orange\">\n                                    <i class=\"material-icons\">remove</i>\n                                </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n                            <span class=\"slidRightBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large right orange\">\n                                    <i class=\"material-icons\">add</i>\n                                </a>\n                            </span>\n                        </div>\n                    </li>";
         return html;
     };
     App.prototype.generateSlideContent = function () {
         var _this = this;
         var menus = this.menus;
-        //console.log(menus);
         var html = " <ul><li class=\"slideItem\" style=\"height: 50px\"></li>";
         menus.map(function (menu) {
             html += _this.generateSlideContentItem(menu);
@@ -111,7 +96,6 @@ var App = (function () {
         $(".slidewapper").html(this.generateSlideContent());
     };
     App.prototype.init = function () {
-        //console.log("init");
         var _this = this;
         this.initHeight();
         this.initBtnEvent();
@@ -123,4 +107,3 @@ var App = (function () {
 }());
 var app = new App();
 app.init();
-//# sourceMappingURL=app.js.map
