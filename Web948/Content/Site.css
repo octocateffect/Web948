@@ -109,3 +109,24 @@
     position: relative;
     top: 92%;
 }
+
+/*Slid Show*/
+.slidewapper {
+    height: 75%;
+    margin-top: 25%;
+}
+
+.slidewapper  ul {
+    margin: 0 auto;
+    max-width: 75%;
+    height: 100%;
+    overflow-x: scroll;
+}
+
+li.slideItem{
+}
+
+li.slideItem img{
+    /*margin: 0 auto;*/
+    max-width: 100%;
+}

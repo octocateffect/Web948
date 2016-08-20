@@ -123,6 +123,10 @@ var App = (function () {
             }
         ];
     }
+    App.prototype.initHeight = function () {
+        this.height = $(".mobile").height();
+        console.log(this.height);
+    };
     App.prototype.initBtnEvent = function () {
         var _this = this;
         var homeBlock = $(".mobile .home");
@@ -134,7 +138,7 @@ var App = (function () {
             homeBlock.css({
                 "display": "none"
             });
-            var height = _this.height - (54 * 2);
+            var height = (_this.height * 0.86 - (54 * 2));
             $(".menu .menu-area").css({
                 "height": "" + height
             });
@@ -156,8 +160,7 @@ var App = (function () {
     };
     App.prototype.init = function () {
         console.log("init");
-        this.height = $(".mobile").height();
-        console.log(this.height);
+        this.initHeight();
         this.initBtnEvent();
     };
     return App;
