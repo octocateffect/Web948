@@ -200,6 +200,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\plugins\" />
+    <Folder Include="Scripts\typings\linq\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -213,10 +214,6 @@
     <TypeScriptCompile Include="Scripts\dist\app.ts" />
     <TypeScriptCompile Include="Scripts\linq.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\linq\linq.3.0.4-Beta5.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\linq\linq.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\linq\linq.jquery.3.0.4-Beta5.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\linq\linq.jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
   </ItemGroup>
   <ItemGroup>

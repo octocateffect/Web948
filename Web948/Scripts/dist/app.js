@@ -631,6 +631,7 @@ var App = (function () {
             }
         ];
         this.menus = [];
+        this.userOrder = [];
     }
     App.prototype.getMenus = function (callback) {
         var _this = this;
@@ -737,7 +738,36 @@ var App = (function () {
         this.initBtnEvent();
         this.getMenus(function () {
             _this.insertslideContent();
+            var insertBtns = $(".slidRightBtn a");
+            insertBtns.map(function (i, e) {
+                var elem = $(e);
+                var value = elem.attr("value");
+                elem.click(function () {
+                    _this.insertItem(value);
+                });
+            });
+            var removeBtns = $(".slidLeftBtn a");
+            removeBtns.map(function (i, e) {
+                var elem = $(e);
+                var value = elem.attr("value");
+                elem.click(function () {
+                    _this.removeItem(value);
+                });
+            });
         });
+    };
+    App.prototype.insertItem = function (id) {
+        this.userOrder.push(id);
+        console.log(this.userOrder);
+    };
+    App.prototype.removeItem = function (id) {
+        var elem = Enumerable.from(this.userOrder).firstOrDefault(function (i) { return i === id; });
+        console.log(elem);
+        if (elem) {
+            var index = this.userOrder.indexOf(id);
+            this.userOrder.splice(index, 1);
+        }
+        console.log(this.userOrder);
     };
     return App;
 }());
