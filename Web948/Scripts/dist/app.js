@@ -27,7 +27,6 @@ var App = (function () {
                 var data = [];
                 var i = 0;
                 while (response[0][i]) {
-                    console.log(response[0][i]);
                     var item = response[0][i];
                     data.push({
                         id: item["id"],

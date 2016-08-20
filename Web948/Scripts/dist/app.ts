@@ -34,7 +34,7 @@ class App {
 
                 let i = 0;
                 while (response[0][i]) {
-                    console.log(response[0][i]);
+                   //console.log(response[0][i]);
                     const item = response[0][i];
 
                     data.push(<MenuItem>{

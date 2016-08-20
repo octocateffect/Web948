@@ -152,6 +152,8 @@
     <Content Include="Content\images\food3.png" />
     <Content Include="Content\images\food4.png" />
     <None Include="Content\menus.json" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logo2.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
