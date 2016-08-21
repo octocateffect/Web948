@@ -756,25 +756,30 @@ class App {
     private generateSlideContentItem(item: MenuItem): string {
         const image = item.imageurl || `../../Content/images/food1.png`; //TODO
 
-        const html = `<li class="slideItem" style="background-image: url('${image}');">
-                        <div class="row center">
-                            <span class="slidLeftBtn">
-                    <a href="#" value="${item.id}" class="btn waves-effect waves-light btn-large left yellow darken-4">
-                        <i class="material-icons">remove</i>
-                    </a>
-                            </span>
-                            <span class="slideImgMask center">
-<div class="item-name">${item.name.trim()}</div>
-<div class="item-price">${item.prices} 元</div>
-                            </span>
+        const html = `
+<li class="slideItem" style="background-image: url('${image}');">
+    <div class="row center">
+        <span class="slidLeftBtn">
+            <a href="#" value="${item.id}" class="btn waves-effect waves-light btn-large left yellow darken-4">
+                <i class="material-icons">remove</i>
+            </a>
+        </span>
+        <span class="slideImgMask center">
+            <div class="item-name">${item.name.trim()}</div>
+            <div class="item-price">${item.prices} 元</div>
 
-                             <span class="slidRightBtn">
-                <a href="#" value="${item.id}" class="btn waves-effect waves-light  btn-large right yellow darken-4">
-                    <i class="material-icons">add</i>
-                </a>
-                        </span>
-                        </div>
-                    </li>`;
+        </span>
+
+        <span class="slidRightBtn">
+            <a href="#" value="${item.id}" class="btn waves-effect waves-light  btn-large right yellow darken-4">
+                <i class="material-icons">add</i>
+            </a>
+        </span>
+
+        <div class="selected-count" value="${item.id}"></div>
+
+    </div>
+</li>`;
 
         return html;
     }
@@ -804,7 +809,22 @@ class App {
 
         this.userOrder.push(item);
 
-        //console.log(this.userOrder);
+        this.changeSelectedCount(id);
+    }
+
+    private changeSelectedCount(id: string) {
+        const count = Enumerable.from(this.userOrder).count(x => x.id === id);
+
+        var elem = $(`.selected-count[value=${id}]`);
+        var itemid = $(elem).attr("value");
+
+        console.log(itemid);
+        console.log(count);
+        if (count >= 1) {
+            elem.html(`已選數量 :<span class="red-text"> ${count}</span>`);
+        } else {
+             elem.html(``);
+        }
     }
 
     private removeItem(id: string): void {
@@ -815,8 +835,9 @@ class App {
             this.userOrder.splice(index, 1);
         }
 
-        //console.log(this.userOrder);
+        this.changeSelectedCount(id);
     }
+
     private bindOprateBtn() {  // add Btn
         const insertBtns = $(".slidRightBtn a");
         insertBtns.map((i, e) => {
@@ -916,15 +937,15 @@ class App {
                 if (response) {
                     let html = `  <div class="row center">
                         <div class="col s12">
-                            <h5>最佳化推薦 </h5>
+                            <h5>最佳化推薦 : </h5>
                         </div>`;
 
                     response.items.map((data) => {
                         html += this.getDetaiView(data);
                     });
 
-                    html += `<div class="col  s12">
-                            推薦價 ${response.prices}
+                    html += `<br /><div class="col  s12">
+                            最實惠價格 : ${response.prices}
                         </div>
 
                     </div>`;

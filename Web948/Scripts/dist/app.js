@@ -719,7 +719,7 @@ var App = (function () {
     };
     App.prototype.generateSlideContentItem = function (item) {
         var image = item.imageurl || "../../Content/images/food1.png";
-        var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                    <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light btn-large left yellow darken-4\">\n                        <i class=\"material-icons\">remove</i>\n                    </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n\n                             <span class=\"slidRightBtn\">\n                <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light  btn-large right yellow darken-4\">\n                    <i class=\"material-icons\">add</i>\n                </a>\n                        </span>\n                        </div>\n                    </li>";
+        var html = "\n<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n    <div class=\"row center\">\n        <span class=\"slidLeftBtn\">\n            <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light btn-large left yellow darken-4\">\n                <i class=\"material-icons\">remove</i>\n            </a>\n        </span>\n        <span class=\"slideImgMask center\">\n            <div class=\"item-name\">" + item.name.trim() + "</div>\n            <div class=\"item-price\">" + item.prices + " \u5143</div>\n\n        </span>\n\n        <span class=\"slidRightBtn\">\n            <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light  btn-large right yellow darken-4\">\n                <i class=\"material-icons\">add</i>\n            </a>\n        </span>\n\n        <div class=\"selected-count\" value=\"" + item.id + "\"></div>\n\n    </div>\n</li>";
         return html;
     };
     App.prototype.generateSlideContentView = function () {
@@ -738,6 +738,20 @@ var App = (function () {
     App.prototype.insertItem = function (id) {
         var item = Enumerable.from(this.currentMenuItems).firstOrDefault(function (x) { return x.id === id; });
         this.userOrder.push(item);
+        this.changeSelectedCount(id);
+    };
+    App.prototype.changeSelectedCount = function (id) {
+        var count = Enumerable.from(this.userOrder).count(function (x) { return x.id === id; });
+        var elem = $(".selected-count[value=" + id + "]");
+        var itemid = $(elem).attr("value");
+        console.log(itemid);
+        console.log(count);
+        if (count >= 1) {
+            elem.html("\u5DF2\u9078\u6578\u91CF :<span class=\"red-text\"> " + count + "</span>");
+        }
+        else {
+            elem.html("");
+        }
     };
     App.prototype.removeItem = function (id) {
         var elem = Enumerable.from(this.userOrder).firstOrDefault(function (x) { return x.id === id; });
@@ -745,6 +759,7 @@ var App = (function () {
             var index = this.userOrder.indexOf(elem);
             this.userOrder.splice(index, 1);
         }
+        this.changeSelectedCount(id);
     };
     App.prototype.bindOprateBtn = function () {
         var _this = this;
@@ -818,11 +833,11 @@ var App = (function () {
             success: function (response) {
                 console.log(response);
                 if (response) {
-                    var html_1 = "  <div class=\"row center\">\n                        <div class=\"col s12\">\n                            <h5>\u6700\u4F73\u5316\u63A8\u85A6 </h5>\n                        </div>";
+                    var html_1 = "  <div class=\"row center\">\n                        <div class=\"col s12\">\n                            <h5>\u6700\u4F73\u5316\u63A8\u85A6 : </h5>\n                        </div>";
                     response.items.map(function (data) {
                         html_1 += _this.getDetaiView(data);
                     });
-                    html_1 += "<div class=\"col  s12\">\n                            \u63A8\u85A6\u50F9 " + response.prices + "\n                        </div>\n\n                    </div>";
+                    html_1 += "<br /><div class=\"col  s12\">\n                            \u6700\u5BE6\u60E0\u50F9\u683C : " + response.prices + "\n                        </div>\n\n                    </div>";
                     $(".detail .SuggestDetail").html(html_1);
                 }
                 callback();

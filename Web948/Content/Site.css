@@ -136,6 +136,12 @@ li.slideItem {
     height: 200px;
 }
 
+.slideItem .selected-count {
+    margin-top: 150px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
 .slideItem a.btn {
     padding-top: 80px;
     font-size: 32px;
