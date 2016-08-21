@@ -635,10 +635,7 @@ var App = (function () {
     }
     App.prototype.getMenus = function (callback) {
         var _this = this;
-        //const url = "Content/menus.json";
         var url = "/Menus/Items/mcdonalds";
-        //console.log("ajax start");
-        //const data = <any>{ "name": "mcdonalds" };
         $.ajax({
             type: "GET",
             data: null,
@@ -648,7 +645,6 @@ var App = (function () {
             },
             success: function (response) {
                 var data = [];
-                //console.log(response);
                 var i = 0;
                 while (response[i]) {
                     var item = response[i];
@@ -663,7 +659,6 @@ var App = (function () {
                     i++;
                 }
                 _this.currentMenuItems = data;
-                //console.log(data);
                 callback();
             },
             complete: function () {
@@ -687,22 +682,16 @@ var App = (function () {
                 callback();
             }
         });
-        //return data;
     };
     App.prototype.initHeight = function () {
-        // init height
         this.height = $(".mobile").height();
-        //console.log(this.height);
     };
     App.prototype.initBtnEvent = function () {
         var _this = this;
-        // init Block
         var homeBlock = $(".mobile .home");
         var menuBlock = $(".mobile .menu");
         var detailBlock = $(".mobile .detail");
-        // Show Menu
         var homeBtns = $(".mobile .home a");
-        //console.log(homeBtns);
         homeBtns.click(function () {
             homeBlock.css({
                 "display": "none"
@@ -713,27 +702,23 @@ var App = (function () {
             });
             menuBlock.show();
         });
-        // Change Company
         var companyBtns = $(".mobile .showCompanyMenuBtnArea a");
-        //console.log(companyBtns);
         companyBtns.click(function () {
             detailBlock.hide();
         });
-        //ShowDetail
         var showDetailBtn = $(".mobile a[value=ShowDetail]");
         showDetailBtn.click(function () {
             _this.generateSelectDetailView();
             $(".mobile .detail").show();
         });
-        // Hide Detail
         var closeDetailBtn = $(".mobile a[value=CloseDetail]");
         closeDetailBtn.click(function () {
             detailBlock.hide();
         });
     };
     App.prototype.generateSlideContentItem = function (item) {
-        var image = item.imageurl || "../../Content/images/food1.png"; //TODO
-        var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                    <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light btn-large left orange\">\n                        <i class=\"material-icons\">remove</i>\n                    </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n\n                             <span class=\"slidRightBtn\">\n                <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light  btn-large right orange\">\n                    <i class=\"material-icons\">add</i>\n                </a>\n                        </span>\n                        </div>\n                    </li>";
+        var image = item.imageurl || "../../Content/images/food1.png";
+        var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                    <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light btn-large left yellow darken-4\">\n                        <i class=\"material-icons\">remove</i>\n                    </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n\n                             <span class=\"slidRightBtn\">\n                <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light  btn-large right yellow darken-4\">\n                    <i class=\"material-icons\">add</i>\n                </a>\n                        </span>\n                        </div>\n                    </li>";
         return html;
     };
     App.prototype.generateSlideContentView = function () {
@@ -752,16 +737,13 @@ var App = (function () {
     App.prototype.insertItem = function (id) {
         var item = Enumerable.from(this.currentMenuItems).firstOrDefault(function (x) { return x.id === id; });
         this.userOrder.push(item);
-        //console.log(this.userOrder);
     };
     App.prototype.removeItem = function (id) {
         var elem = Enumerable.from(this.userOrder).firstOrDefault(function (x) { return x.id === id; });
-        //console.log(elem);
         if (elem) {
             var index = this.userOrder.indexOf(elem);
             this.userOrder.splice(index, 1);
         }
-        //console.log(this.userOrder);
     };
     App.prototype.bindOprateBtn = function () {
         var _this = this;
@@ -771,17 +753,14 @@ var App = (function () {
             var value = elem.attr("value");
             elem.click(function () {
                 _this.insertItem(value);
-                //console.log(value);
             });
         });
-        // delete Btn
         var removeBtns = $(".slidLeftBtn a");
         removeBtns.map(function (i, e) {
             var elem = $(e);
             var value = elem.attr("value");
             elem.click(function () {
                 _this.removeItem(value);
-                //console.log(value);
             });
         });
     };
@@ -801,12 +780,10 @@ var App = (function () {
                 });
             }
         });
-        //console.log(repos);
         var total = 0;
         repos.map(function (item) {
             total += parseInt(item.item.prices) * item.count;
         });
-        //console.log(total);
         var html = " <blockquote><div class=\"row\">\n<div class=\"col s12\"><h5>\u7E3D\u8A08 : </h5></div>";
         repos.map(function (item) {
             html += _this.generateItemDetailView(item, item.count);
@@ -823,7 +800,6 @@ var App = (function () {
         ;
     };
     App.prototype.init = function () {
-        //console.log("init");
         var _this = this;
         this.initHeight();
         this.initBtnEvent();
@@ -841,4 +817,3 @@ var Order = (function () {
 }());
 var app = new App();
 app.init();
-//# sourceMappingURL=app.js.map
