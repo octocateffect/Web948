@@ -4,23 +4,44 @@ namespace Web948.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        //[HttpGet]
+        //public ActionResult Menus()
+        //{
+        //    var servie = new ApiService();
 
-            return View();
-        }
+        //    var result = servie.GetMenus();
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult MenusItem(string id)
+        //{
+        //    var servie = new ApiService();
+
+        //    var result = servie.GetMenuItems(id);
+
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
+
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Your application description page.";
+
+        //    return View();
+        //}
+
+        //public ActionResult Contact()
+        //{
+        //    ViewBag.Message = "Your contact page.";
+
+        //    return View();
+        //}
     }
 }

@@ -640,22 +640,24 @@ class App {
 
     private getMenus(callback: any): void {
         //const url = "Content/menus.json";
-        const url = "https://best-way-948.appspot.com/menus/mcdonalds";
+        const url = "/Menus/Items/mcdonalds";
         //console.log("ajax start");
+        //const data = <any>{ "name": "mcdonalds" };
 
         $.ajax({
-            type: "get",
+            type: "GET",
+            data: null,
             url: url,
-            //data: "",
             dataType: "json",
             beforeSend: () => {
             },
             success: response => {
                 var data: MenuItem[] = [];
 
+                console.log(response);
                 let i = 0;
-                while (response[0][i]) {
-                    const item = response[0][i];
+                while (response[i]) {
+                    const item = response[i];
 
                     data.push(<MenuItem>{
                         id: item["id"],
@@ -670,7 +672,7 @@ class App {
                 }
 
                 this.currentMenuItems = data;
-
+                console.log(data);
                 callback();
             },
             complete: () => {
@@ -756,19 +758,20 @@ class App {
         const html = `<li class="slideItem" style="background-image: url('${image}');">
                         <div class="row center">
                             <span class="slidLeftBtn">
-                                <a href="#" value="${item.id}" class="btn btn-large left orange">
-                                    <i class="material-icons">remove</i>
-                                </a>
+                    <a href="#" value="${item.id}" class="btn waves-effect waves-light btn-large left orange">
+                        <i class="material-icons">remove</i>
+                    </a>
                             </span>
                             <span class="slideImgMask center">
 <div class="item-name">${item.name.trim()}</div>
 <div class="item-price">${item.prices} 元</div>
                             </span>
-                            <span class="slidRightBtn">
-                                <a href="#" value="${item.id}" class="btn btn-large right orange">
-                                    <i class="material-icons">add</i>
-                                </a>
-                            </span>
+
+                             <span class="slidRightBtn">
+                <a href="#" value="${item.id}" class="btn btn-large right orange">
+                    <i class="material-icons">add</i>
+                </a>
+                        </span>
                         </div>
                     </li>`;
 
@@ -867,7 +870,7 @@ class App {
 <div class="col s12"><h5>總計 : </h5></div>`;
 
         repos.map((item: Order) => {
-            html += this.generateItemDetailView(item.item.name, item.item.prices);
+            html += this.generateItemDetailView(item, item.count);
         });
 
         html += `<hr /><div class="col  s12">總額 : ${total}</div> </div></blockquote>`;
@@ -875,10 +878,14 @@ class App {
         $(".detail .TotalDetail").html(html);
     }
 
-    private generateItemDetailView(name: string, price: string) {
-        const html = ` <div class="col  s12">${name} : ${price}</div>`;
+    private generateItemDetailView(order: Order, count: number) {
+        const total = count > 1 ? parseInt(order.item.prices) * count : "";
 
-        return html;
+        if (count > 1) {
+            return ` <div class="col  s12">${order.item.name} : ${order.item.prices} * ${count}  = ${total} </div>`;
+        }
+
+        return ` <div class="col  s12">${order.item.name} : ${order.item.prices} </div>`;;
     }
 
     init() {

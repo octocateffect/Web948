@@ -635,18 +635,20 @@ var App = (function () {
     }
     App.prototype.getMenus = function (callback) {
         var _this = this;
-        var url = "https://best-way-948.appspot.com/menus/mcdonalds";
+        var url = "/Menus/Items/mcdonalds";
         $.ajax({
-            type: "get",
+            type: "GET",
+            data: null,
             url: url,
             dataType: "json",
             beforeSend: function () {
             },
             success: function (response) {
                 var data = [];
+                console.log(response);
                 var i = 0;
-                while (response[0][i]) {
-                    var item = response[0][i];
+                while (response[i]) {
+                    var item = response[i];
                     data.push({
                         id: item["id"],
                         name: item["name"],
@@ -658,6 +660,7 @@ var App = (function () {
                     i++;
                 }
                 _this.currentMenuItems = data;
+                console.log(data);
                 callback();
             },
             complete: function () {
@@ -717,7 +720,7 @@ var App = (function () {
     };
     App.prototype.generateSlideContentItem = function (item) {
         var image = item.imageurl || "../../Content/images/food1.png";
-        var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large left orange\">\n                                    <i class=\"material-icons\">remove</i>\n                                </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n                            <span class=\"slidRightBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large right orange\">\n                                    <i class=\"material-icons\">add</i>\n                                </a>\n                            </span>\n                        </div>\n                    </li>";
+        var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                    <a href=\"#\" value=\"" + item.id + "\" class=\"btn waves-effect waves-light btn-large left orange\">\n                        <i class=\"material-icons\">remove</i>\n                    </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n\n                             <span class=\"slidRightBtn\">\n                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large right orange\">\n                    <i class=\"material-icons\">add</i>\n                </a>\n                        </span>\n                        </div>\n                    </li>";
         return html;
     };
     App.prototype.generateSlideContentView = function () {
@@ -790,14 +793,18 @@ var App = (function () {
         console.log(total);
         var html = " <blockquote><div class=\"row\">\n<div class=\"col s12\"><h5>\u7E3D\u8A08 : </h5></div>";
         repos.map(function (item) {
-            html += _this.generateItemDetailView(item.item.name, item.item.prices);
+            html += _this.generateItemDetailView(item, item.count);
         });
         html += "<hr /><div class=\"col  s12\">\u7E3D\u984D : " + total + "</div> </div></blockquote>";
         $(".detail .TotalDetail").html(html);
     };
-    App.prototype.generateItemDetailView = function (name, price) {
-        var html = " <div class=\"col  s12\">" + name + " : " + price + "</div>";
-        return html;
+    App.prototype.generateItemDetailView = function (order, count) {
+        var total = count > 1 ? parseInt(order.item.prices) * count : "";
+        if (count > 1) {
+            return " <div class=\"col  s12\">" + order.item.name + " : " + order.item.prices + " * " + count + "  = " + total + " </div>";
+        }
+        return " <div class=\"col  s12\">" + order.item.name + " : " + order.item.prices + " </div>";
+        ;
     };
     App.prototype.init = function () {
         var _this = this;
