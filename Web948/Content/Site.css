@@ -140,6 +140,7 @@ li.slideItem {
     margin-top: 150px;
     font-size: 16px;
     font-weight: 500;
+    padding-left: 150px;
 }
 
 .slideItem a.btn {
