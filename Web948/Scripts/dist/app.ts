@@ -742,6 +742,7 @@ class App {
         const showDetailBtn = $(".mobile a[value=ShowDetail]");
         showDetailBtn.click(() => {
             this.generateSelectDetailView();
+            this.generateGetPriceView(() => { });
             $(".mobile .detail").show();
         });
 
@@ -888,6 +889,64 @@ class App {
         return ` <div class="col  s12">${order.item.name} : ${order.item.prices} </div>`;;
     }
 
+    private generateGetPriceView(callback: any) {
+        //const url = "Content/menus.json";
+        const url = `/Menus/GetPrice`;//?list=[1,2,3]
+        //console.log("ajax start");
+        //const data = <any>{ "name": "mcdonalds" };
+
+        var list = Enumerable.from(this.userOrder).select(x => x.id).toArray();
+
+        console.log(list);
+
+        var data = <Model>{
+            list: list
+        };
+
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: url,
+            dataType: "json",
+            beforeSend: () => {
+            },
+            success: response => {
+                console.log(response);
+
+                if (response) {
+                    let html = `  <div class="row center">
+                        <div class="col s12">
+                            <h5>最佳化推薦 </h5>
+                        </div>`;
+
+                    response.items.map((data) => {
+                        html += this.getDetaiView(data);
+                    });
+
+                    html += `<div class="col  s12">
+                            推薦價 ${response.prices}
+                        </div>
+
+                    </div>`;
+
+                    $(".detail .SuggestDetail").html(html);
+                }
+
+                callback();
+            },
+            complete: () => {
+            },
+            error: (xhr, status, text) => {
+            }
+        });
+    }
+
+    private getDetaiView(item: any) {
+        const html = `<div class="col  s12"> 推薦買 ${item.name} 數量   ${item.count}  </div>`;
+
+        return html;
+    }
+
     init() {
         //console.log("init");
 
@@ -898,6 +957,10 @@ class App {
             this.bindOprateBtn();
         });
     }
+}
+
+class Model {
+    list: string[];
 }
 
 class Order {

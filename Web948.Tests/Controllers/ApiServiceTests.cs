@@ -34,7 +34,7 @@ namespace Web948.Tests.Controllers
         {
             var traegt = new ApiService();
 
-            var list = new List<string> { "1", "2", "3" };
+            var list = new List<int> { 1, 2, 3 };
 
             var actual = traegt.GetPrices("0", list.ToArray());
 

@@ -19,6 +19,8 @@ namespace Web948.Controllers
         public string image_url { get; set; }
         public string prices { get; set; }
         public string id { get; set; }
+
+        public int count { get; set; }
     }
 
     public class Menu
@@ -62,7 +64,7 @@ namespace Web948.Controllers
             return result;
         }
 
-        public SuggestPrice GetPrices(string id, string[] list)
+        public SuggestPrice GetPrices(string id, int[] list)
         {
             var str = string.Join(",", list);
 
@@ -81,35 +83,6 @@ namespace Web948.Controllers
             var result = JsonConvert.DeserializeObject<SuggestPrice>(content);
 
             return result;
-
-            //using (var client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri("https://best-way-948.appspot.com/getPrices?menu_id=0&orders=[1,2,3]");
-            //    client.DefaultRequestHeaders.Accept.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //    // HTTP GET
-            //    HttpResponseMessage response = client.GetAsync("api/products/1").Result;
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        Console.WriteLine(response.Content);
-            //    }
-
-            //    //// HTTP POST
-            //    //var gizmo = new Product() { Name = "Gizmo", Price = 100, Category = "Widget" };
-            //    //response = await client.PostAsJsonAsync("api/products", gizmo);
-            //    //if (response.IsSuccessStatusCode)
-            //    //{
-            //    //    Uri gizmoUrl = response.Headers.Location;
-
-            //    //    // HTTP PUT
-            //    //    gizmo.Price = 80;   // Update price
-            //    //    response = await client.PutAsJsonAsync(gizmoUrl, gizmo);
-
-            //    //    // HTTP DELETE
-            //    //    response = await client.DeleteAsync(gizmoUrl);
-            //    //}
-            //}
         }
     }
 }

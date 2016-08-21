@@ -709,6 +709,7 @@ var App = (function () {
         var showDetailBtn = $(".mobile a[value=ShowDetail]");
         showDetailBtn.click(function () {
             _this.generateSelectDetailView();
+            _this.generateGetPriceView(function () { });
             $(".mobile .detail").show();
         });
         var closeDetailBtn = $(".mobile a[value=CloseDetail]");
@@ -799,6 +800,43 @@ var App = (function () {
         return " <div class=\"col  s12\">" + order.item.name + " : " + order.item.prices + " </div>";
         ;
     };
+    App.prototype.generateGetPriceView = function (callback) {
+        var _this = this;
+        var url = "/Menus/GetPrice";
+        var list = Enumerable.from(this.userOrder).select(function (x) { return x.id; }).toArray();
+        console.log(list);
+        var data = {
+            list: list
+        };
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: url,
+            dataType: "json",
+            beforeSend: function () {
+            },
+            success: function (response) {
+                console.log(response);
+                if (response) {
+                    var html_1 = "  <div class=\"row center\">\n                        <div class=\"col s12\">\n                            <h5>\u6700\u4F73\u5316\u63A8\u85A6 </h5>\n                        </div>";
+                    response.items.map(function (data) {
+                        html_1 += _this.getDetaiView(data);
+                    });
+                    html_1 += "<div class=\"col  s12\">\n                            \u63A8\u85A6\u50F9 " + response.prices + "\n                        </div>\n\n                    </div>";
+                    $(".detail .SuggestDetail").html(html_1);
+                }
+                callback();
+            },
+            complete: function () {
+            },
+            error: function (xhr, status, text) {
+            }
+        });
+    };
+    App.prototype.getDetaiView = function (item) {
+        var html = "<div class=\"col  s12\"> \u63A8\u85A6\u8CB7 " + item.name + " \u6578\u91CF   " + item.count + "  </div>";
+        return html;
+    };
     App.prototype.init = function () {
         var _this = this;
         this.initHeight();
@@ -809,6 +847,11 @@ var App = (function () {
         });
     };
     return App;
+}());
+var Model = (function () {
+    function Model() {
+    }
+    return Model;
 }());
 var Order = (function () {
     function Order() {
