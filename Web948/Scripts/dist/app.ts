@@ -873,7 +873,7 @@ class App {
             html += this.generateItemDetailView(item, item.count);
         });
 
-        html += `<hr /><div class="col  s12">總額 : ${total}</div> </div></blockquote>`;
+        html += `<div> </div><hr /><div class="col  s12">原總額 : ${total}</div> </div></blockquote>`;
 
         $(".detail .TotalDetail").html(html);
     }
@@ -882,7 +882,7 @@ class App {
         const total = count > 1 ? parseInt(order.item.prices) * count : "";
 
         if (count > 1) {
-            return ` <div class="col  s12">${order.item.name} : ${order.item.prices} * ${count}  = ${total} </div>`;
+            return ` <div class="col  s12">${order.item.name} : ${order.item.prices} 元 * ${count} 份 = ${total} 元 </div>`;
         }
 
         return ` <div class="col  s12">${order.item.name} : ${order.item.prices} </div>`;;

@@ -788,13 +788,13 @@ var App = (function () {
         repos.map(function (item) {
             html += _this.generateItemDetailView(item, item.count);
         });
-        html += "<hr /><div class=\"col  s12\">\u7E3D\u984D : " + total + "</div> </div></blockquote>";
+        html += "<div> </div><hr /><div class=\"col  s12\">\u539F\u7E3D\u984D : " + total + "</div> </div></blockquote>";
         $(".detail .TotalDetail").html(html);
     };
     App.prototype.generateItemDetailView = function (order, count) {
         var total = count > 1 ? parseInt(order.item.prices) * count : "";
         if (count > 1) {
-            return " <div class=\"col  s12\">" + order.item.name + " : " + order.item.prices + " * " + count + "  = " + total + " </div>";
+            return " <div class=\"col  s12\">" + order.item.name + " : " + order.item.prices + " \u5143 * " + count + " \u4EFD = " + total + " \u5143 </div>";
         }
         return " <div class=\"col  s12\">" + order.item.name + " : " + order.item.prices + " </div>";
         ;
