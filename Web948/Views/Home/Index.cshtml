@@ -5,93 +5,97 @@
         <div class="row logo-cover">
             <div class="logo center">
                 <img src="~/Content/images/logo.png" />
-
             </div>
         </div>
         <div class="row floatbar">
-            <a value="Home" heef="" class="col s4 btn waves-effect waves-light btn-large orange darken-3">A </a>
-            <a value="Menu" herf="" class="col s4 btn waves-effect waves-light btn-large orange darken-3">B </a>
-            <a value="Detail" herf="" class="col s4 btn waves-effect waves-light btn-large orange darken-3">C </a>
+            <a value="Home" heef="" class="col s4 btn waves-effect waves-light btn-large  yellow darken-4">A </a>
+            <a value="Menu" herf="" class="col s4 btn waves-effect waves-light btn-large yellow darken-4">B </a>
+            <a value="Detail" herf="" class="col s4 btn waves-effect waves-light btn-large yellow darken-4">C </a>
         </div>
     </div>
 
     <div class="col s12 menu">
 
         <div class="row showCompanyMenuBtnArea">
-            <a value="Home" heef="" class="col s4 btn waves-effect waves-light btn-large orange darken-3">A </a>
-            <a value="Menu" herf="" class="col s4 btn waves-effect waves-light btn-large orange darken-3">B </a>
-            <a value="Detail" herf="" class="col s4 btn waves-effect waves-light btn-large orange darken-3">C </a>
+            <a value="Home" heef="" class="col s4 btn waves-effect waves-light btn-large yellow darken-4">A </a>
+            <a value="Menu" herf="" class="col s4 btn waves-effect waves-light btn-large yellow darken-4">B </a>
+            <a value="Detail" herf="" class="col s4 btn waves-effect waves-light btn-large yellow darken-4">C </a>
         </div>
 
         <div class="row menu-area">
 
             <div class="slidewapper">
-                @*<ul>
-                    <li class="slideItem" style="height: 100px">
-                    </li>
-
-                    <li class="slideItem" style="background-image: url('../../Content/images/food1.png');">
-
-                        <div class="row center">
-                            <span class="slidLeftBtn">
-                                <a href="#" class="btn btn-large left orange">
-                                    <i class="material-icons">remove</i>
-                                </a>
-                            </span>
-                            <span class="slideImgMask ">
-                                100 元
-                            </span>
-                            <span class="slidRightBtn">
-                                <a href="#" class="btn btn-large right orange">
-                                    <i class="material-icons">add</i>
-                                </a>
-                            </span>
-                        </div>
-                    </li>
-
-                    <li class="slideItem" style="background-image: url('../../Content/images/food1.png');">
-
-                        <img src="~/Scripts/plugins/vertical-slider/img/02.jpg" />
-                    </li>
-
-                    <li class="slideItem">
-
-                        <img src="~/Scripts/plugins/vertical-slider/img/03.jpg" />
-                    </li>
-
-                    <li class="slideItem">
-
-                        <img src="~/Scripts/plugins/vertical-slider/img/04.jpg" />
-                    </li>
-
-                    <li class="slideItem">
-                        <img src="~/Scripts/plugins/vertical-slider/img/01.jpg" />
-                    </li>
-
-                    <li class="slideItem" style="height: 100px">
-                    </li>
-                </ul>*@
             </div>
         </div>
 
         <div class="row showDetailBtnRow">
-            <a value="ShowDetail" heef="" class="col s12 btn waves-effect waves-light btn-large orange darken-3">
-                V
+            <a value="ShowDetail" heef="" class="col s12 btn waves-effect waves-light btn-large yellow darken-4">
+                <i class="material-icons">keyboard_arrow_down</i>
             </a>
         </div>
     </div>
 
     <div class="col s12 detail">
         <div class="row">
+
+            <div class="col s12">
+                <div class="row TotalDetail">
+                </div>
+
+                <div class="col">
+                    <hr />
+                </div>
+
+                <hr />
+                <div class="row SuggestDetail">
+
+                    @*<div class="row center">
+                            <div class="col s12">
+                                <h5>最佳化 </h5>
+                            </div>
+
+                            <div class="col  s12">
+                                黑輪買 6 送 1 , 多買一個？
+                            </div>
+
+                            <div class="col  s12">
+                                豆干買 6 送 1 , 多買一個？
+                            </div>
+                        </div>*@
+                </div>
+            </div>
         </div>
+
         <div class="row closeDetailBtnRow">
-            <a value="CloseDetail" heef="" class="col s12 btn waves-effect waves-light btn-large orange darken-3">
-                V
+            <a value="CloseDetail" heef="" class="col s12 btn waves-effect waves-light btn-large yellow darken-4">
+                <i class="material-icons">keyboard_arrow_up</i>
             </a>
         </div>
     </div>
 </div>
 @section scripts{
-
-    <script src="/Scripts/require.js" data-main="/Scripts/dist/app.js"></script>
+    <script src="~/Scripts/linq.js"></script>
+    <script src="/Scripts/require.js" data-main="/Scripts/dist/app.js?v12"></script>
 }
+
+@*<li class="slideItem" style="background-image: url('${image}');">
+    <div class="row center">
+        <span class="slidLeftBtn">
+            <a href="#" value="${item.id}" class="btn waves-effect waves-light btn-large left yellow darken-4">
+                <i class="material-icons">remove</i>
+            </a>
+        </span>
+        <span class="slideImgMask center">
+            <div class="item-name">${item.name.trim()}</div>
+            <div class="item-price">${item.prices} 元</div>
+
+            <div class="selected-count"> 100 </div>
+        </span>
+
+        <span class="slidRightBtn">
+            <a href="#" value="${item.id}" class="btn waves-effect waves-light  btn-large right yellow darken-4">
+                <i class="material-icons">add</i>
+            </a>
+        </span>
+    </div>
+</li>*@

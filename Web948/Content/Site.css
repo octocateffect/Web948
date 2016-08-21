@@ -68,7 +68,7 @@
 
     .mobile > .menu {
         display: none;
-        background-color: yellow;
+        background-color: aliceblue;
         max-width: 720px;
         width: 100%;
         padding: 0;
@@ -103,40 +103,44 @@
 .mobile .detail {
     width: 75%;
     height: 90%;
-    background-color: purple;
+    background-color: whitesmoke;
     z-index: 200;
     position: absolute;
     bottom: 0;
     display: none;
 }
 
-.closeDetailBtnRow {
-    position: relative;
-    top: 92%;
-}
-
 /*Slid Show*/
 .slidewapper {
     height: 90%;
-    margin-top: 15%;
+    margin-top: 64px;
 }
 
     .slidewapper ul {
         margin: 0 auto;
         max-width: 75%;
         height: 100%;
-        overflow-x: scroll;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
 
 li.slideItem {
     width: 100%;
     height: 200px;
+    margin: 4px 0;
     background-size: 100% 200px;
 }
 
 .slideItem .btn {
     width: 54px;
     height: 200px;
+}
+
+.slideItem .selected-count {
+    margin-top: 150px;
+    font-size: 16px;
+    font-weight: 500;
+    padding-left: 150px;
 }
 
 .slideItem a.btn {
@@ -160,4 +164,21 @@ li.slideItem {
 .item-name, .item-price {
     font-weight: 900;
     display: inline-block;
+}
+
+/*Detail*/
+
+.detail .TotalDetail {
+    /*height: 240px;*/
+    height: 50%;
+}
+
+.detail .SuggestDetail {
+    height: 240px;
+}
+
+.closeDetailBtnRow {
+    position: absolute;
+    width: 100%;
+    top: 92%;
 }
