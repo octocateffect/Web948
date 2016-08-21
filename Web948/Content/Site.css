@@ -113,19 +113,21 @@
 /*Slid Show*/
 .slidewapper {
     height: 90%;
-    margin-top: 15%;
+    margin-top: 9%;
 }
 
     .slidewapper ul {
         margin: 0 auto;
         max-width: 75%;
         height: 100%;
-        overflow-x: scroll;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
 
 li.slideItem {
     width: 100%;
     height: 200px;
+    margin: 4px 0;
     background-size: 100% 200px;
 }
 
@@ -166,9 +168,7 @@ li.slideItem {
 
 .detail .SuggestDetail {
     height: 240px;
-    
 }
-
 
 .closeDetailBtnRow {
     position: absolute;

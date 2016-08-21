@@ -654,7 +654,7 @@ class App {
             success: response => {
                 var data: MenuItem[] = [];
 
-                console.log(response);
+               //console.log(response);
                 let i = 0;
                 while (response[i]) {
                     const item = response[i];
@@ -672,7 +672,7 @@ class App {
                 }
 
                 this.currentMenuItems = data;
-                console.log(data);
+               //console.log(data);
                 callback();
             },
             complete: () => {
@@ -768,7 +768,7 @@ class App {
                             </span>
 
                              <span class="slidRightBtn">
-                <a href="#" value="${item.id}" class="btn btn-large right orange">
+                <a href="#" value="${item.id}" class="btn waves-effect waves-light  btn-large right orange">
                     <i class="material-icons">add</i>
                 </a>
                         </span>
@@ -803,18 +803,18 @@ class App {
 
         this.userOrder.push(item);
 
-        console.log(this.userOrder);
+       //console.log(this.userOrder);
     }
 
     private removeItem(id: string): void {
         const elem = Enumerable.from(this.userOrder).firstOrDefault(x => x.id === id);
-        console.log(elem);
+       //console.log(elem);
         if (elem) {
             const index = this.userOrder.indexOf(elem);
             this.userOrder.splice(index, 1);
         }
 
-        console.log(this.userOrder);
+       //console.log(this.userOrder);
     }
     private bindOprateBtn() {  // add Btn
         const insertBtns = $(".slidRightBtn a");
@@ -856,7 +856,7 @@ class App {
             }
         });
 
-        console.log(repos);
+       //console.log(repos);
 
         var total: number = 0;
 
@@ -864,7 +864,7 @@ class App {
             total += parseInt(item.item.prices) * item.count;
         });
 
-        console.log(total);
+       //console.log(total);
 
         var html = ` <blockquote><div class="row">
 <div class="col s12"><h5>總計 : </h5></div>`;
