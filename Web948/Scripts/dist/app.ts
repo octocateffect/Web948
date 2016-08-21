@@ -636,10 +636,11 @@ class App {
 
     private height: number;
 
-    private menus: MenuItem[] = [];
+    private currentMenuItems: MenuItem[] = [];
 
     private getMenus(callback: any): void {
-        const url = "Content/menus.json";
+        //const url = "Content/menus.json";
+        const url = "https://best-way-948.appspot.com/menus/mcdonalds";
         //console.log("ajax start");
 
         $.ajax({
@@ -668,7 +669,7 @@ class App {
                     i++;
                 }
 
-                this.menus = data;
+                this.currentMenuItems = data;
 
                 callback();
             },
@@ -692,7 +693,7 @@ class App {
                     i++;
                 }
 
-                this.menus = data;
+                this.currentMenuItems = data;
 
                 callback();
             }
@@ -738,6 +739,7 @@ class App {
         //ShowDetail
         const showDetailBtn = $(".mobile a[value=ShowDetail]");
         showDetailBtn.click(() => {
+            this.generateSelectDetailView();
             $(".mobile .detail").show();
         });
 
@@ -773,13 +775,12 @@ class App {
         return html;
     }
 
-    private generateSlideContent(): string {
-        const menus: MenuItem[] = this.menus;
-        //console.log(menus);
+    private generateSlideContentView(): string {
+        const items: MenuItem[] = this.currentMenuItems;
 
         let html = ` <ul><li class="slideItem" style="height: 50px"></li>`;
 
-        menus.map((menu: MenuItem) => {
+        items.map((menu: MenuItem) => {
             html += this.generateSlideContentItem(menu);
         });
 
@@ -788,11 +789,97 @@ class App {
         return html;
     }
 
-    private insertslideContent(): void {
-        $(".slidewapper").html(this.generateSlideContent());
+    private insertslideContentView(): void {
+        $(".slidewapper").html(this.generateSlideContentView());
     }
 
-    private userOrder: string[] = [];
+    private userOrder: MenuItem[] = [];
+
+    private insertItem(id: string): void {
+        var item = Enumerable.from(this.currentMenuItems).firstOrDefault(x => x.id === id);
+
+        this.userOrder.push(item);
+
+        console.log(this.userOrder);
+    }
+
+    private removeItem(id: string): void {
+        const elem = Enumerable.from(this.userOrder).firstOrDefault(x => x.id === id);
+        console.log(elem);
+        if (elem) {
+            const index = this.userOrder.indexOf(elem);
+            this.userOrder.splice(index, 1);
+        }
+
+        console.log(this.userOrder);
+    }
+    private bindOprateBtn() {  // add Btn
+        const insertBtns = $(".slidRightBtn a");
+        insertBtns.map((i, e) => {
+            var elem = $(e);
+            var value = elem.attr("value");
+            elem.click(() => {
+                this.insertItem(value);
+                //console.log(value);
+            });
+        });
+
+        // delete Btn
+
+        const removeBtns = $(".slidLeftBtn a");
+        removeBtns.map((i, e) => {
+            var elem = $(e);
+            var value = elem.attr("value");
+            elem.click(() => {
+                this.removeItem(value);
+                //console.log(value);
+            });
+        });
+    }
+
+    private generateSelectDetailView() {
+        var repos: Order[] = [];
+
+        this.userOrder.map((item: MenuItem) => {
+            var value = Enumerable.from(repos).firstOrDefault(x => x.itemId === item.id);
+            if (value) {
+                value.count += 1;
+            } else {
+                repos.push(<Order>{
+                    itemId: item.id,
+                    item: item,
+                    count: 1
+                });
+            }
+        });
+
+        console.log(repos);
+
+        var total: number = 0;
+
+        repos.map((item: Order) => {
+            total += parseInt(item.item.prices) * item.count;
+        });
+
+        console.log(total);
+
+        var html = ` <blockquote><div class="row">
+<div class="col s12"><h5>總計 : </h5></div>`;
+
+        repos.map((item: Order) => {
+            html += this.generateItemDetailView(item.item.name, item.item.prices);
+        });
+
+        html += `<hr /><div class="col  s12">總額 : ${total}</div> </div></blockquote>`;
+
+        $(".detail .TotalDetail").html(html);
+    }
+
+    private generateItemDetailView(name: string, price: string) {
+        const html = ` <div class="col  s12">${name} : ${price}</div>`;
+
+        return html;
+    }
 
     init() {
         //console.log("init");
@@ -800,52 +887,16 @@ class App {
         this.initHeight();
         this.initBtnEvent();
         this.getMenus(() => {
-            this.insertslideContent();
-
-            // add Btn
-            const insertBtns = $(".slidRightBtn a");
-            insertBtns.map((i, e) => {
-                var elem = $(e);
-                var value = elem.attr("value");
-                elem.click(() => {
-                    this.insertItem(value);
-                    //console.log(value);
-                });
-            });
-
-            // delete Btn
-
-            const removeBtns = $(".slidLeftBtn a");
-            removeBtns.map((i, e) => {
-                var elem = $(e);
-                var value = elem.attr("value");
-                elem.click(() => {
-                    this.removeItem(value);
-                    //console.log(value);
-                });
-            });
+            this.insertslideContentView();
+            this.bindOprateBtn();
         });
     }
+}
 
-    insertItem(id: string): void {
-        //console.log(`+${id}`);
-        this.userOrder.push(id);
-        console.log(this.userOrder);
-    }
-
-    removeItem(id: string): void {
-        //console.log(`-${id}`);
-        const elem = Enumerable.from(this.userOrder).firstOrDefault(i => i === id);
-        //const index = this.userOrder.indexOf(id);
-        console.log(elem);
-        //const index = this.userOrder.indexOf(id);
-        if (elem) {
-            const index = this.userOrder.indexOf(id);
-            this.userOrder.splice(index, 1);
-        }
-
-        console.log(this.userOrder);
-    }
+class Order {
+    itemId: string;
+    item: MenuItem;
+    count: number;
 }
 
 var app = new App();

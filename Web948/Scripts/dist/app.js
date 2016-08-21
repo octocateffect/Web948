@@ -630,12 +630,12 @@ var App = (function () {
                 }
             }
         ];
-        this.menus = [];
+        this.currentMenuItems = [];
         this.userOrder = [];
     }
     App.prototype.getMenus = function (callback) {
         var _this = this;
-        var url = "Content/menus.json";
+        var url = "https://best-way-948.appspot.com/menus/mcdonalds";
         $.ajax({
             type: "get",
             url: url,
@@ -657,7 +657,7 @@ var App = (function () {
                     });
                     i++;
                 }
-                _this.menus = data;
+                _this.currentMenuItems = data;
                 callback();
             },
             complete: function () {
@@ -677,7 +677,7 @@ var App = (function () {
                     });
                     i++;
                 }
-                _this.menus = data;
+                _this.currentMenuItems = data;
                 callback();
             }
         });
@@ -707,6 +707,7 @@ var App = (function () {
         });
         var showDetailBtn = $(".mobile a[value=ShowDetail]");
         showDetailBtn.click(function () {
+            _this.generateSelectDetailView();
             $(".mobile .detail").show();
         });
         var closeDetailBtn = $(".mobile a[value=CloseDetail]");
@@ -719,57 +720,100 @@ var App = (function () {
         var html = "<li class=\"slideItem\" style=\"background-image: url('" + image + "');\">\n                        <div class=\"row center\">\n                            <span class=\"slidLeftBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large left orange\">\n                                    <i class=\"material-icons\">remove</i>\n                                </a>\n                            </span>\n                            <span class=\"slideImgMask center\">\n<div class=\"item-name\">" + item.name.trim() + "</div>\n<div class=\"item-price\">" + item.prices + " \u5143</div>\n                            </span>\n                            <span class=\"slidRightBtn\">\n                                <a href=\"#\" value=\"" + item.id + "\" class=\"btn btn-large right orange\">\n                                    <i class=\"material-icons\">add</i>\n                                </a>\n                            </span>\n                        </div>\n                    </li>";
         return html;
     };
-    App.prototype.generateSlideContent = function () {
+    App.prototype.generateSlideContentView = function () {
         var _this = this;
-        var menus = this.menus;
+        var items = this.currentMenuItems;
         var html = " <ul><li class=\"slideItem\" style=\"height: 50px\"></li>";
-        menus.map(function (menu) {
+        items.map(function (menu) {
             html += _this.generateSlideContentItem(menu);
         });
         html += "<li class=\"slideItem\" style=\"height: 50px\"></li></ul>";
         return html;
     };
-    App.prototype.insertslideContent = function () {
-        $(".slidewapper").html(this.generateSlideContent());
+    App.prototype.insertslideContentView = function () {
+        $(".slidewapper").html(this.generateSlideContentView());
+    };
+    App.prototype.insertItem = function (id) {
+        var item = Enumerable.from(this.currentMenuItems).firstOrDefault(function (x) { return x.id === id; });
+        this.userOrder.push(item);
+        console.log(this.userOrder);
+    };
+    App.prototype.removeItem = function (id) {
+        var elem = Enumerable.from(this.userOrder).firstOrDefault(function (x) { return x.id === id; });
+        console.log(elem);
+        if (elem) {
+            var index = this.userOrder.indexOf(elem);
+            this.userOrder.splice(index, 1);
+        }
+        console.log(this.userOrder);
+    };
+    App.prototype.bindOprateBtn = function () {
+        var _this = this;
+        var insertBtns = $(".slidRightBtn a");
+        insertBtns.map(function (i, e) {
+            var elem = $(e);
+            var value = elem.attr("value");
+            elem.click(function () {
+                _this.insertItem(value);
+            });
+        });
+        var removeBtns = $(".slidLeftBtn a");
+        removeBtns.map(function (i, e) {
+            var elem = $(e);
+            var value = elem.attr("value");
+            elem.click(function () {
+                _this.removeItem(value);
+            });
+        });
+    };
+    App.prototype.generateSelectDetailView = function () {
+        var _this = this;
+        var repos = [];
+        this.userOrder.map(function (item) {
+            var value = Enumerable.from(repos).firstOrDefault(function (x) { return x.itemId === item.id; });
+            if (value) {
+                value.count += 1;
+            }
+            else {
+                repos.push({
+                    itemId: item.id,
+                    item: item,
+                    count: 1
+                });
+            }
+        });
+        console.log(repos);
+        var total = 0;
+        repos.map(function (item) {
+            total += parseInt(item.item.prices) * item.count;
+        });
+        console.log(total);
+        var html = " <blockquote><div class=\"row\">\n<div class=\"col s12\"><h5>\u7E3D\u8A08 : </h5></div>";
+        repos.map(function (item) {
+            html += _this.generateItemDetailView(item.item.name, item.item.prices);
+        });
+        html += "<hr /><div class=\"col  s12\">\u7E3D\u984D : " + total + "</div> </div></blockquote>";
+        $(".detail .TotalDetail").html(html);
+    };
+    App.prototype.generateItemDetailView = function (name, price) {
+        var html = " <div class=\"col  s12\">" + name + " : " + price + "</div>";
+        return html;
     };
     App.prototype.init = function () {
         var _this = this;
         this.initHeight();
         this.initBtnEvent();
         this.getMenus(function () {
-            _this.insertslideContent();
-            var insertBtns = $(".slidRightBtn a");
-            insertBtns.map(function (i, e) {
-                var elem = $(e);
-                var value = elem.attr("value");
-                elem.click(function () {
-                    _this.insertItem(value);
-                });
-            });
-            var removeBtns = $(".slidLeftBtn a");
-            removeBtns.map(function (i, e) {
-                var elem = $(e);
-                var value = elem.attr("value");
-                elem.click(function () {
-                    _this.removeItem(value);
-                });
-            });
+            _this.insertslideContentView();
+            _this.bindOprateBtn();
         });
     };
-    App.prototype.insertItem = function (id) {
-        this.userOrder.push(id);
-        console.log(this.userOrder);
-    };
-    App.prototype.removeItem = function (id) {
-        var elem = Enumerable.from(this.userOrder).firstOrDefault(function (i) { return i === id; });
-        console.log(elem);
-        if (elem) {
-            var index = this.userOrder.indexOf(id);
-            this.userOrder.splice(index, 1);
-        }
-        console.log(this.userOrder);
-    };
     return App;
+}());
+var Order = (function () {
+    function Order() {
+    }
+    return Order;
 }());
 var app = new App();
 app.init();
